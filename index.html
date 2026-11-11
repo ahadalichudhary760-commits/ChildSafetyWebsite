@@ -1,109 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Child Safety Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .box {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 320px;
-            text-align: center;
-        }
-        h1 {
-            color: #1e3a8a;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        p {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 15px;
-        }
-        .btn-orange {
-            width: 100%;
-            padding: 12px;
-            background: #f97316;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-        .btn-blue {
-            width: 100%;
-            padding: 12px;
-            background: #1e3a8a;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Child Safety</title>
 </head>
 <body>
+  <h1>Child Safety Website</h1>
+  <p id="status">Checking Firebase...</p>
 
-    <div class="box">
-        <h1>Child Safety Website</h1>
-        <p>Track Your Child Live</p>
-
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password">
-
-        <button class="btn-orange" onclick="signup()">Create New Account</button>
-        <button class="btn-blue" onclick="login()">Login</button>
-    </div>
-
-    <script>
-        function signup() {
-            let email = document.getElementById('email').value;
-            let pass = document.getElementById('password').value;
-            if(email == "" || pass == "") {
-                alert("Please enter Email and Password");
-            } else {
-                localStorage.setItem("userEmail", email);
-                localStorage.setItem("userPass", pass);
-                alert("Account Created! Now Login karo");
-            }
-        }
-        function login() {
-            let email = document.getElementById('email').value;
-            let pass = document.getElementById('password').value;
-            let savedEmail = localStorage.getItem("userEmail");
-            let savedPass = localStorage.getItem("userPass");
-            if(email == savedEmail && pass == savedPass) {
-                alert("Login Successful!");
-                window.location.href = "parent.html";
-            } else {
-                alert("Wrong Email or Password. Pehle Create New Account dabao");
-            }
-        }
-    </script>
-
+  <script type="module">
+    import { auth, db } from "./js/firebase.js";
+    console.log("Firebase connected:", auth, db);
+    document.getElementById("status").textContent = "Firebase connected ✔";
+  </script>
 </body>
 </html>
