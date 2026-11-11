@@ -1,125 +1,109 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Child Safety Website</title>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<style>
-body{font-family:Arial;background:#FFF3E0;margin:0;padding:20px;text-align:center}
-.box{background:white;max-width:500px;margin:auto;padding:20px;border-radius:15px;box-shadow:0 4px 15px rgba(0,0,0,.1)}
-h1{color:#E65100} h2{color:#2E7D32}
-input{width:90%;padding:12px;margin:8px;border:2px solid #FFB74D;border-radius:10px;font-size:16px}
-button{background:#FF6D00;color:white;border:none;padding:12px 20px;margin:8px;border-radius:10px;font-size:16px;cursor:pointer;width:90%}
-button.green{background:#2E7D32} button.blue{background:#1565C0}
-.q{background:#FFF8E1;padding:15px;border-radius:10px;margin:10px 0;text-align:left}
-.opt{display:block;background:white;border:2px solid #FFCC80;padding:10px;margin:5px;border-radius:8px;cursor:pointer;width:100%}
-.hidden{display:none}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Child Safety Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 320px;
+            text-align: center;
+        }
+        h1 {
+            color: #1e3a8a;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        .btn-orange {
+            width: 100%;
+            padding: 12px;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .btn-blue {
+            width: 100%;
+            padding: 12px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-<div class="box">
-<h1>🛡️ Child Safety Website</h1>
-<p>Bachon ko Good Touch / Bad Touch sikhayein</p>
 
-<div id="loginBox">
-<h2>Login / Signup</h2>
-<input id="email" type="email" placeholder="Email likhein - misal: ahad@gmail.com">
-<input id="pass" type="password" placeholder="Password likhein">
-<button onclick="signup()">Naya Account Banao</button>
-<button class="green" onclick="login()">Login Karo</button>
-<p id="msg" style="color:red"></p>
-<p>Parent ho? Pehle bache ka account banao, phir wahi email se login karo.</p>
-</div>
+    <div class="box">
+        <h1>Child Safety Website</h1>
+        <p>Track Your Child Live</p>
 
-<div id="mainBox" class="hidden">
-<h2 id="welcome">Assalam-o-Alaikum!</h2>
-<button onclick="logout()">Logout</button>
-<h2>🎮 Quiz Khelo - 5 Sawal</h2>
-<div id="quiz"></div>
-<button class="green" onclick="submitQuiz()">Result Save Karo</button>
-<h2 id="result"></h2>
-<h2>📊 Mere Pichle Results</h2>
-<div id="history"></div>
-</div>
-</div>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
 
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyDkn7EzM_BjLGb7Nz6bUp8QgFEPNeiSrys",
-  authDomain: "childsafetywebsite.firebaseapp.com",
-  projectId: "childsafetywebsite",
-  storageBucket: "childsafetywebsite.firebasestorage.app",
-  messagingSenderId: "869628543159",
-  appId: "1:869628543159:web:811c54f9acb61be82e4d32"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+        <button class="btn-orange" onclick="signup()">Create New Account</button>
+        <button class="btn-blue" onclick="login()">Login</button>
+    </div>
 
-const questions = [
- {q:"1. Agar koi anjaan shakhs tumhe chocolate ka lalach de to kya karoge?", opts:["Le lunga","Mama Baba ko bataunga","Us ke saath chala jaunga"], ans:1},
- {q:"2. Good Touch kaunsa hai?", opts:["Mama ka pyar se gale lagana","Anjaan ka chupke se haath lagana","Dost ka dhakka dena"], ans:0},
- {q:"3. Agar koi tumhe uncomfortable touch kare to?", opts:["Chup rahunga","Zor se NAH kahunga aur bhag kar bara ko bataunga","Hans dunga"], ans:1},
- {q:"4. Apne private parts ke bare me kisko batana chahiye?", opts:["Kisi anjaan ko","Sirf Mama Baba / Teacher ko","Kisi ko nahi"], ans:1},
- {q:"5. Agar koi kahe 'ye baat kisi ko mat batana' to?", opts:["Chupa lunga","Foran Mama Baba ko bataunga","Darr jaunga"], ans:1}
-];
+    <script>
+        function signup() {
+            let email = document.getElementById('email').value;
+            let pass = document.getElementById('password').value;
+            if(email == "" || pass == "") {
+                alert("Please enter Email and Password");
+            } else {
+                localStorage.setItem("userEmail", email);
+                localStorage.setItem("userPass", pass);
+                alert("Account Created! Now Login karo");
+            }
+        }
+        function login() {
+            let email = document.getElementById('email').value;
+            let pass = document.getElementById('password').value;
+            let savedEmail = localStorage.getItem("userEmail");
+            let savedPass = localStorage.getItem("userPass");
+            if(email == savedEmail && pass == savedPass) {
+                alert("Login Successful!");
+                window.location.href = "parent.html";
+            } else {
+                alert("Wrong Email or Password. Pehle Create New Account dabao");
+            }
+        }
+    </script>
 
-function renderQuiz(){
- let h="";
- questions.forEach((qq,i)=>{
-  h+=`<div class="q"><b>${qq.q}</b><br>`;
-  qq.opts.forEach((o,j)=>{ h+=`<button class="opt" onclick="selectOpt(${i},${j},this)">${o}</button>` });
-  h+=`</div>`;
- });
- document.getElementById("quiz").innerHTML=h;
-}
-let answers = [-1,-1,-1,-1,-1];
-function selectOpt(i,j,btn){
- answers[i]=j;
- let p=btn.parentElement.querySelectorAll(".opt");
- p.forEach(b=>b.style.background="white");
- btn.style.background="#C8E6C9";
-}
-async function signup(){
- try{ await auth.createUserWithEmailAndPassword(email.value, pass.value); document.getElementById("msg").innerText="Account ban gaya! Ab Login karo."; }
- catch(e){ document.getElementById("msg").innerText=e.message; }
-}
-async function login(){
- try{ await auth.signInWithEmailAndPassword(email.value, pass.value); }
- catch(e){ document.getElementById("msg").innerText=e.message; }
-}
-function logout(){ auth.signOut(); }
-async function submitQuiz(){
- let score=0;
- answers.forEach((a,i)=>{ if(a===questions[i].ans) score++; });
- document.getElementById("result").innerText = "Tumhara Score: "+score+" / 5 🎉";
- let user = auth.currentUser;
- if(user){
-  await db.collection("results").add({email:user.email, score:score, total:5, date:new Date().toLocaleString()});
-  loadHistory();
- }
-}
-async function loadHistory(){
- let user = auth.currentUser; if(!user) return;
- let snap = await db.collection("results").where("email","==",user.email).get();
- let h="";
- snap.forEach(d=>{ let r=d.data(); h+=`<p>📅 ${r.date} - Score: ${r.score}/5</p>`; });
- document.getElementById("history").innerHTML = h || "Abhi koi result nahi";
-}
-auth.onAuthStateChanged(u=>{
- if(u){
-  document.getElementById("loginBox").classList.add("hidden");
-  document.getElementById("mainBox").classList.remove("hidden");
-  document.getElementById("welcome").innerText="Assalam-o-Alaikum! "+u.email;
-  renderQuiz(); loadHistory();
- } else {
-  document.getElementById("loginBox").classList.remove("hidden");
-  document.getElementById("mainBox").classList.add("hidden");
- }
-});
-</script>
 </body>
 </html>
